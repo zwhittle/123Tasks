@@ -14,3 +14,6 @@ Due date can be in any of these formats:
 * YYYY/MM/DD
 
 Saves each task to a database but doesn't do anything with them yet.
+
+## Example: 
+Take passport photo #passport @walgreens !12/30/2020
