@@ -3,7 +3,6 @@
 Enter a task into the box and hit the button.
 
 Extracts name, tags, projects, and due date based on annotations:
-
 @ = tag
 \# = project
 ! = due date
