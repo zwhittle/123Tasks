@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="task"-->
-<!--            type="com.zachwhittle.a123tasks.ui.model.Task" />-->
-<!--    </data>-->
+    <data>
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:padding="8dp"
+        android:onClick="@{listener}"
         android:layout_height="wrap_content">
 
         <TextView

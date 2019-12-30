@@ -24,4 +24,12 @@ class TaskRepository(private val taskDao: TaskDao) {
 
         taskDao.insert(dbTask)
     }
+
+    suspend fun update(task: Task): Int {
+        val dbTask = task.toDatabaseModel()
+
+        Log.d(this::class.java.simpleName, "Task $dbTask")
+
+        return taskDao.update(dbTask)
+    }
 }

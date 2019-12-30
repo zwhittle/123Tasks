@@ -40,13 +40,17 @@ fun ArrayList<String>.withCommas(): String {
     val builder = StringBuilder()
 
     if (this.size > 0) {
-        for (s in this) {
-            builder.append(s).append(", ")
+        forEachIndexed { i, s ->
+            builder.append(s.trim())
+
+            if (i != this.lastIndex) {
+                builder.append(", ")
+            }
         }
 
-        val output = builder.toString().trim()
+        val output = builder.toString()
 
-        return output.substring(1, output.length - 2)
+        return output
 //        return output
     }
 

@@ -1,9 +1,9 @@
 package com.zachwhittle.a123tasks.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zachwhittle.a123tasks.data.TaskDatabase
 import com.zachwhittle.a123tasks.data.repository.TaskRepository
@@ -37,5 +37,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
      */
     fun insert(task: Task) = viewModelScope.launch {
         repository.insert(task)
+    }
+
+    fun update(task: Task) = viewModelScope.launch {
+        val count = repository.update(task)
+
+        Log.d(this::class.java.simpleName, "count: $count")
+    }
+
+    fun toggleComplete(task: Task) {
+        if (task.isComplete) {
+            uncompleteTask(task)
+        } else {
+            completeTask(task)
+        }
+    }
+
+    private fun completeTask(task: Task) {
+        task.isComplete = true
+        update(task)
+    }
+
+    private fun uncompleteTask(task: Task) {
+        task.isComplete = false
+        update(task)
     }
 }

@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        adapter = TaskRVAdapter()
+        adapter = TaskRVAdapter(viewModel)
         recyclerView.adapter = adapter
 
         viewModel.allTasks.observe(viewLifecycleOwner, Observer { tasks ->

@@ -15,5 +15,7 @@ Due date can be in any of these formats:
 
 Saves each task to a database and displays all tasks on the main screen
 
+Tapping on a task toggles whether or not it is complete; shown via strikethrough
+
 ## Example: 
 Take passport photo #passport @walgreens !12/30/2020
