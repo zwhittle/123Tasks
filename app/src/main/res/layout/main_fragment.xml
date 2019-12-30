@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="50dp">
+            android:paddingTop="5dp">
 
             <EditText
                 android:id="@+id/inbox"
@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/enter_string_here"
+                android:text="@string/task_placeholder"
                 android:inputType="text|textMultiLine" />
 
             <Button
@@ -32,12 +33,19 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/outbox"
+<!--        <TextView-->
+<!--            android:id="@+id/outbox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:paddingTop="50dp"-->
+<!--            android:text="@string/shit_happens_here"-->
+<!--            android:visibility="gone" />-->
+
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="50dp"
-            android:text="@string/shit_happens_here" />
+            android:id="@+id/recyclerview"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 </layout>

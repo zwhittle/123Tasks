@@ -1,7 +1,7 @@
 package com.zachwhittle.a123tasks.ui.model
 
 import com.zachwhittle.a123tasks.data.entity.DatabaseTask
-import com.zachwhittle.a123tasks.util.onNewLines
+import com.zachwhittle.a123tasks.util.withNewLines
 
 data class Task(
     var name: String,
@@ -13,9 +13,9 @@ data class Task(
         return StringBuilder().append("Task:\n")
             .append(name).append("\n\n")
             .append("Projects:\n")
-            .append(projects.onNewLines()).append("\n\n")
+            .append(projects.withNewLines()).append("\n\n")
             .append("Tags:\n")
-            .append(tags.onNewLines()).append("\n\n")
+            .append(tags.withNewLines()).append("\n\n")
             .append("Due:\n")
             .append(due)
             .toString()

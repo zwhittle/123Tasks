@@ -1,5 +1,6 @@
 package com.zachwhittle.a123tasks.ui.main
 
+import android.app.Activity
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +11,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zachwhittle.a123tasks.R
 import com.zachwhittle.a123tasks.databinding.MainFragmentBinding
+import com.zachwhittle.a123tasks.ui.adapter.TaskRVAdapter
 import com.zachwhittle.a123tasks.ui.model.Task
 import com.zachwhittle.a123tasks.ui.viewmodel.MainViewModel
 import com.zachwhittle.a123tasks.util.*
@@ -26,6 +31,10 @@ class MainFragment : Fragment() {
     private lateinit var outbox: TextView
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: TaskRVAdapter
+
+    private lateinit var task: Task
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +43,11 @@ class MainFragment : Fragment() {
         val binding = DataBindingUtil.inflate<MainFragmentBinding>(inflater, R.layout.main_fragment, container, false)
 
         inbox = binding.inbox
-        outbox = binding.outbox
+//        outbox = binding.outbox
+
+        recyclerView = binding.recyclerview
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
 
         binding.dealWithItButton.setOnClickListener {
             dealWithString()
@@ -46,11 +59,18 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        adapter = TaskRVAdapter()
+        recyclerView.adapter = adapter
+
+        viewModel.allTasks.observe(viewLifecycleOwner, Observer { tasks ->
+            adapter.tasks = tasks
+            adapter.notifyDataSetChanged()
+        })
     }
 
     private fun setOutboxText(value: String) {
-        outbox.text = value
+//        outbox.text = value
     }
 
     private fun dealWithString() {
