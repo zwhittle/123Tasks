@@ -13,7 +13,7 @@ data class DatabaseTask(
     var projects: String,
     var tags: String,
     var due: String?,
-    var complete: Boolean = false)
+    var isComplete: Boolean = false)
 
 /**
 * Map DatabaseMovies to domain entities
@@ -25,6 +25,6 @@ fun List<DatabaseTask>.asDomainModel(): List<Task> {
             projects = ArrayList(it.projects.split(",")),
             tags = ArrayList(it.tags.split(",")),
             due = it.due,
-            isComplete = it.complete)
+            isComplete = it.isComplete)
     }
 }

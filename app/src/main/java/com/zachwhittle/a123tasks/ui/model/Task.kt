@@ -35,7 +35,7 @@ data class Task(
             tags = tags.withCommas(),
             projects = projects.withCommas(),
             due = due,
-            complete = isComplete)
+            isComplete = isComplete)
     }
 
 }

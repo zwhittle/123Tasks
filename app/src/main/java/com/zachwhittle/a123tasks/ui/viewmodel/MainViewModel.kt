@@ -2,6 +2,7 @@ package com.zachwhittle.a123tasks.ui.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 // Class extends AndroidViewModel and requires application as a parameter.
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val logTag = this.javaClass.simpleName
 
     // The ViewModel maintains a reference to the repository to get data.
     private val repository: TaskRepository
@@ -20,12 +22,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     // LiveData gives us updated tasks when they change.
     val allTasks: LiveData<List<Task>>
 
+    val completedTasks: LiveData<List<Task>>
+
+    val activeTasks: LiveData<List<Task>>
+
     init {
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
         val taskDao = TaskDatabase.getDatabase(application).taskDao()
         repository = TaskRepository(taskDao)
         allTasks = repository.allTasks
+        completedTasks = repository.completedTasks
+        activeTasks = repository.activeTasks
     }
 
     /**
@@ -39,10 +47,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository.insert(task)
     }
 
-    fun update(task: Task) = viewModelScope.launch {
+    private fun update(task: Task) = viewModelScope.launch {
         val count = repository.update(task)
 
         Log.d(this::class.java.simpleName, "count: $count")
+    }
+
+    fun clearAll() = viewModelScope.launch {
+        val count = repository.clearAll()
+
+        Log.d(logTag, "$count tasks deleted.")
     }
 
     fun toggleComplete(task: Task) {

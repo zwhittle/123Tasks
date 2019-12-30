@@ -8,4 +8,9 @@ object Constants {
         """(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"""
     const val REGEX_DATE_MMDDYY = """(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.]\d\d$"""
     const val REGEX_DATE_MMDD = """(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$"""
+
+
+    const val SHOWING_ALL_TASKS = 1
+    const val SHOWING_ACTIVE_TASKS = 2
+    const val SHOWING_COMPLETED_TASKS = 3
 }

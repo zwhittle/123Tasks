@@ -11,6 +11,12 @@ interface TaskDao {
     @Query("select * from databasetask")
     fun getAllTasks(): LiveData<List<DatabaseTask>>
 
+    @Query("select * from databasetask where isComplete = 1")
+    fun getCompletedTasks(): LiveData<List<DatabaseTask>>
+
+    @Query("select * from databasetask where isComplete = 0")
+    fun getActiveTasks(): LiveData<List<DatabaseTask>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(task: DatabaseTask): Long
 
@@ -18,5 +24,5 @@ interface TaskDao {
     suspend fun update(task: DatabaseTask): Int
 
     @Query("delete from databasetask")
-    suspend fun deleteAll()
+    suspend fun deleteAll(): Int
 }
