@@ -1,6 +1,5 @@
 package com.zachwhittle.a123tasks.data.entity
 
-import android.graphics.Movie
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.zachwhittle.a123tasks.ui.model.Task
@@ -13,16 +12,19 @@ data class DatabaseTask(
     var name: String,
     var projects: String,
     var tags: String,
-    var due: String?)
+    var due: String?,
+    var isComplete: Boolean = false)
 
 /**
 * Map DatabaseMovies to domain entities
 */
 fun List<DatabaseTask>.asDomainModel(): List<Task> {
     return map {
-        Task(name = it.name,
+        Task (id = it.id,
+            name = it.name,
             projects = ArrayList(it.projects.split(",")),
             tags = ArrayList(it.tags.split(",")),
-            due = it.due)
+            due = it.due,
+            isComplete = it.isComplete)
     }
 }

@@ -17,11 +17,31 @@ class TaskRepository(private val taskDao: TaskDao) {
         it.asDomainModel()
     }
 
+    val completedTasks: LiveData<List<Task>> = Transformations.map(taskDao.getCompletedTasks()) {
+        it.asDomainModel()
+    }
+
+    val activeTasks: LiveData<List<Task>> = Transformations.map(taskDao.getActiveTasks()) {
+        it.asDomainModel()
+    }
+
     suspend fun insert(task: Task) {
         val dbTask = task.toDatabaseModel()
 
         Log.d(this::class.java.simpleName, "Task: $dbTask")
 
         taskDao.insert(dbTask)
+    }
+
+    suspend fun update(task: Task): Int {
+        val dbTask = task.toDatabaseModel()
+
+        Log.d(this::class.java.simpleName, "Task $dbTask")
+
+        return taskDao.update(dbTask)
+    }
+
+    suspend fun clearAll(): Int {
+        return taskDao.deleteAll()
     }
 }

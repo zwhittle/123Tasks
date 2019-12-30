@@ -1,7 +1,9 @@
-
 <resources>
-<string name="app_name">123 Tasks</string>
-<string name="enter_string_here">Enter String Here</string>
-<string name="shit_happens_here">Shit happens here.</string>
-<string name="deal">Deal</string>
+    <string name="app_name">123 Tasks</string>
+    <string name="enter_string_here">Enter String Here</string>
+    <string name="shit_happens_here">Shit happens here.</string>
+    <string name="deal">Deal</string>
+    <string name="task_placeholder">Take passport photo @walgreens @shopping #passport #travel ~12/30/2019</string>
+    <string name="clear_db">Clear DB</string>
+    <string name="toggle_complete">Toggle Complete</string>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_clear_db"
+        android:icon="@drawable/ic_sync_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/clear_db"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_toggle_complete"
+        android:icon="@drawable/ic_done_all_white_24dp"
+        android:orderInCategory="200"
+        android:title="@string/toggle_complete"
+        app:showAsAction="ifRoom" />
+</menu>

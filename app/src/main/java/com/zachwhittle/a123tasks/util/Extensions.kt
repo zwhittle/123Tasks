@@ -14,12 +14,45 @@ fun String.startsWithHash() : Boolean = this.startsWith("#")
 
 fun String.startsWithBang() : Boolean = this.startsWith("!")
 
-fun ArrayList<String>.onNewLines() : String {
+fun String.startsWithTilde() : Boolean = this.startsWith("~")
+
+
+/**
+ * ArrayList
+ */
+
+// Prints each item in the ArrayList on it's own line
+fun ArrayList<String>.withNewLines(): String {
     val builder = StringBuilder()
 
-    for (s in this) {
-        builder.append(s).append("\n")
+    if (this.size > 0) {
+        for (s in this) {
+            builder.append(s).append("\n")
+        }
+        return builder.toString().trim()
     }
 
-    return builder.toString().trim()
+    return ""
+}
+
+// Prints each item in the ArrayList separated by commas
+fun ArrayList<String>.withCommas(): String {
+    val builder = StringBuilder()
+
+    if (this.size > 0) {
+        forEachIndexed { i, s ->
+            builder.append(s.trim())
+
+            if (i != this.lastIndex) {
+                builder.append(", ")
+            }
+        }
+
+        val output = builder.toString()
+
+        return output
+//        return output
+    }
+
+    return ""
 }

@@ -3,15 +3,17 @@ package com.zachwhittle.a123tasks.ui.main
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zachwhittle.a123tasks.R
 import com.zachwhittle.a123tasks.databinding.MainFragmentBinding
+import com.zachwhittle.a123tasks.ui.adapter.TaskRVAdapter
 import com.zachwhittle.a123tasks.ui.model.Task
 import com.zachwhittle.a123tasks.ui.viewmodel.MainViewModel
 import com.zachwhittle.a123tasks.util.*
@@ -26,15 +28,27 @@ class MainFragment : Fragment() {
     private lateinit var outbox: TextView
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: TaskRVAdapter
+
+    private lateinit var task: Task
+
+    private var showingTasks: Int = Constants.SHOWING_ALL_TASKS
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        setHasOptionsMenu(true)
         val binding = DataBindingUtil.inflate<MainFragmentBinding>(inflater, R.layout.main_fragment, container, false)
 
         inbox = binding.inbox
-        outbox = binding.outbox
+//        outbox = binding.outbox
+
+        recyclerView = binding.recyclerview
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
 
         binding.dealWithItButton.setOnClickListener {
             dealWithString()
@@ -46,11 +60,82 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        adapter = TaskRVAdapter(viewModel)
+        recyclerView.adapter = adapter
+
+        when (showingTasks) {
+            Constants.SHOWING_ALL_TASKS -> viewModel.allTasks.observe(viewLifecycleOwner, tasksObserver)
+            Constants.SHOWING_ACTIVE_TASKS -> viewModel.activeTasks.observe(viewLifecycleOwner, tasksObserver)
+            Constants.SHOWING_COMPLETED_TASKS -> viewModel.completedTasks.observe(viewLifecycleOwner, tasksObserver)
+        }
+    }
+
+    private val tasksObserver = Observer<List<Task>> { tasks ->
+        adapter.tasks = tasks
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_clear_db -> {actionClearDb()}
+            R.id.action_toggle_complete -> {actionToggleComplete()}
+            else -> false
+        }
+    }
+
+    private fun actionClearDb(): Boolean {
+        viewModel.clearAll()
+        return true
+    }
+
+    private fun actionToggleComplete(): Boolean {
+        when (showingTasks) {
+            Constants.SHOWING_ALL_TASKS -> subscribeToActiveTasks()
+            Constants.SHOWING_ACTIVE_TASKS -> subscribeToAllTasks()
+        }
+        return true
+    }
+
+    private fun subscribeToActiveTasks() {
+        clearObservers()
+        viewModel.activeTasks.observe(viewLifecycleOwner, tasksObserver)
+        showingTasks = Constants.SHOWING_ACTIVE_TASKS
+    }
+
+    private fun subscribeToAllTasks() {
+        clearObservers()
+        viewModel.allTasks.observe(viewLifecycleOwner, tasksObserver)
+        showingTasks = Constants.SHOWING_ALL_TASKS
+    }
+
+    private fun subscribeToCompletedTasks() {
+        clearObservers()
+        viewModel.completedTasks.observe(viewLifecycleOwner, tasksObserver)
+        showingTasks = Constants.SHOWING_COMPLETED_TASKS
+    }
+
+    private fun clearObservers() {
+        if (viewModel.allTasks.hasActiveObservers()) {
+            viewModel.allTasks.removeObserver(tasksObserver)
+        }
+
+        if (viewModel.completedTasks.hasActiveObservers()) {
+            viewModel.completedTasks.removeObserver(tasksObserver)
+        }
+
+        if (viewModel.activeTasks.hasActiveObservers()) {
+            viewModel.activeTasks.removeObserver(tasksObserver)
+        }
     }
 
     private fun setOutboxText(value: String) {
-        outbox.text = value
+//        outbox.text = value
     }
 
     private fun dealWithString() {
@@ -77,7 +162,7 @@ class MainFragment : Fragment() {
         val containsBang = text.contains("!")
 
         for (w in words) {
-            val isKey = (w.startsWithAt() || w.startsWithHash() || w.startsWithBang())
+            val isKey = (w.startsWithAt() || w.startsWithHash() || w.startsWithTilde())
 
             if (!isKey) {
                 nameBuilder.append(w).append(" ")
@@ -95,7 +180,7 @@ class MainFragment : Fragment() {
                 projects.add(x)
             }
 
-            if (w.startsWithBang()) {
+            if (w.startsWithTilde()) {
                 val x = w.substring(1)
                 due = x
             }

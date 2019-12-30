@@ -1,8 +1,8 @@
-package com.zachwhittle.a123tasks
+package com.zachwhittle.a123tasks.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.zachwhittle.a123tasks.ui.main.MainFragment
+import com.zachwhittle.a123tasks.R
 
 class MainActivity : AppCompatActivity() {
 
