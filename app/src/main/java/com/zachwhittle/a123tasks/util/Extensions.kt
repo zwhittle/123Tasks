@@ -14,6 +14,8 @@ fun String.startsWithHash() : Boolean = this.startsWith("#")
 
 fun String.startsWithBang() : Boolean = this.startsWith("!")
 
+fun String.startsWithTilde() : Boolean = this.startsWith("~")
+
 
 /**
  * ArrayList

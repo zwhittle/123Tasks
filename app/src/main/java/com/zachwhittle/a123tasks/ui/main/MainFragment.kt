@@ -97,7 +97,7 @@ class MainFragment : Fragment() {
         val containsBang = text.contains("!")
 
         for (w in words) {
-            val isKey = (w.startsWithAt() || w.startsWithHash() || w.startsWithBang())
+            val isKey = (w.startsWithAt() || w.startsWithHash() || w.startsWithTilde())
 
             if (!isKey) {
                 nameBuilder.append(w).append(" ")
@@ -115,7 +115,7 @@ class MainFragment : Fragment() {
                 projects.add(x)
             }
 
-            if (w.startsWithBang()) {
+            if (w.startsWithTilde()) {
                 val x = w.substring(1)
                 due = x
             }
