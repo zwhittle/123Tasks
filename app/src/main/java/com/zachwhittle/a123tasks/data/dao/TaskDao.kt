@@ -8,7 +8,7 @@ import com.zachwhittle.a123tasks.ui.model.Task
 @Dao
 interface TaskDao {
 
-    @Query("select * from databasetask")
+    @Query("select * from databasetask order by isComplete")
     fun getAllTasks(): LiveData<List<DatabaseTask>>
 
     @Query("select * from databasetask where isComplete = 1")
