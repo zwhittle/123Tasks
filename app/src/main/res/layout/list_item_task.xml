@@ -18,6 +18,7 @@
             android:id="@+id/li_task_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Take out the trash" />
@@ -26,25 +27,26 @@
             android:id="@+id/li_task_tags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="walgreens | shopping" />
-
-        <TextView
-            android:id="@+id/li_task_projects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/li_task_name"
-            tools:text="passport | wedding" />
+            tools:text="walgreens | shopping" />
 
         <TextView
             android:id="@+id/li_task_due"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/li_task_tags"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="12/24/2020" />
+
+        <TextView
+            android:id="@+id/li_task_projects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/li_task_due"
+            tools:text="passport | wedding" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
