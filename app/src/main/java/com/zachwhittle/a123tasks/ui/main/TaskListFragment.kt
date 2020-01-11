@@ -12,16 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zachwhittle.a123tasks.R
-import com.zachwhittle.a123tasks.databinding.MainFragmentBinding
+import com.zachwhittle.a123tasks.databinding.FragmentTaskListBinding
 import com.zachwhittle.a123tasks.ui.adapter.TaskRVAdapter
 import com.zachwhittle.a123tasks.ui.model.Task
 import com.zachwhittle.a123tasks.ui.viewmodel.MainViewModel
 import com.zachwhittle.a123tasks.util.*
 
-class MainFragment : Fragment() {
+class TaskListFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = TaskListFragment()
     }
 
     private lateinit var inbox: EditText
@@ -41,7 +41,7 @@ class MainFragment : Fragment() {
     ): View {
 
         setHasOptionsMenu(true)
-        val binding = DataBindingUtil.inflate<MainFragmentBinding>(inflater, R.layout.main_fragment, container, false)
+        val binding = DataBindingUtil.inflate<FragmentTaskListBinding>(inflater, R.layout.fragment_task_list, container, false)
 
         inbox = binding.inbox
 //        outbox = binding.outbox
@@ -90,7 +90,7 @@ class MainFragment : Fragment() {
     }
 
     private fun actionClearDb(): Boolean {
-        viewModel.clearAll()
+        viewModel.clearTasks()
         return true
     }
 
@@ -194,7 +194,7 @@ class MainFragment : Fragment() {
 
         Log.d(this::class.java.simpleName, "Task: $task")
 
-        viewModel.insert(task)
+        viewModel.insertTask(task)
 
         return task.toString()
     }

@@ -13,4 +13,8 @@ object Constants {
     const val SHOWING_ALL_TASKS = 1
     const val SHOWING_ACTIVE_TASKS = 2
     const val SHOWING_COMPLETED_TASKS = 3
+
+    const val POSITION_TASKS = 0
+    const val POSITION_PROJECTS = 1
+    const val POSITIONS_TAGS = 2
 }

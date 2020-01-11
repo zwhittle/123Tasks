@@ -6,4 +6,9 @@
     <string name="task_placeholder">Take passport photo @walgreens @shopping #passport #travel ~12/30/2019</string>
     <string name="clear_db">Clear DB</string>
     <string name="toggle_complete">Toggle Complete</string>
+
+    <string name="title_tab0">Tasks</string>
+    <string name="title_tab1">Projects</string>
+    <string name="title_tab2">Tags</string>
+    <string name="label_placeholder">Home</string>
 </resources>

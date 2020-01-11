@@ -13,15 +13,15 @@ class TaskRepository(private val taskDao: TaskDao) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    val allTasks: LiveData<List<Task>> = Transformations.map(taskDao.getAllTasks()) {
+    val allTasks: LiveData<List<Task>> = Transformations.map(taskDao.getAll()) {
         it.asDomainModel()
     }
 
-    val completedTasks: LiveData<List<Task>> = Transformations.map(taskDao.getCompletedTasks()) {
+    val completedTasks: LiveData<List<Task>> = Transformations.map(taskDao.getCompleted()) {
         it.asDomainModel()
     }
 
-    val activeTasks: LiveData<List<Task>> = Transformations.map(taskDao.getActiveTasks()) {
+    val activeTasks: LiveData<List<Task>> = Transformations.map(taskDao.getActive()) {
         it.asDomainModel()
     }
 
@@ -41,7 +41,7 @@ class TaskRepository(private val taskDao: TaskDao) {
         return taskDao.update(dbTask)
     }
 
-    suspend fun clearAll(): Int {
-        return taskDao.deleteAll()
+    suspend fun clear(): Int {
+        return taskDao.clear()
     }
 }
